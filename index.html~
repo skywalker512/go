@@ -303,7 +303,7 @@
               
               
                 <div class="col-sm-4 col-lg-4 website">
-                  <a href="https://www.baidu.com" id="11" class="website hotkey32 hotkey81">
+                  <a href="https://www.baidu.com" id="11" class="website hotkey66 hotkey32 hotkey81">
                     <span>百度</span>
                   </a>
                 </div>
@@ -315,7 +315,7 @@
                 </div>
               
                 <div class="col-sm-4 col-lg-4 website">
-                  <a href="http://bing.com" id="13" class="website hotkey66">
+                  <a href="http://bing.com" id="13" class="website hotkey">
                     <span>必应</span>
                   </a>
                 </div>
