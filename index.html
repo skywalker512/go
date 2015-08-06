@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>虫洞 - 爱折腾 - 跨越空间维度的传送</title>
+    <meta name="Keywords" content="导航,网址导航,极客导航,IT导航">
+    <meta name="Description" content="这是一个简洁的网址导航。没有广告、弹窗和冗余信息，希望成为通向未知的最短路径。快捷键直达站点、一键打开多个标签页，愿为你节省每分每秒。">
+    <!-- Bootstrap -->
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="icon.png">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="http://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <style type="text/css">
+      body{
+        font-family:'Microsoft Yahei';
+        background-size:100% auto;
+        background-attachment:fixed;
+        background-repeat:no-repeat;
+        background-size:cover;
+      }
+      nav.navbar{
+        margin:0 0 10px 0;
+      }
+      div.navbar-header{
+        padding:10px 5px 5px 18px;
+      }
+      ul.navbar-right a:link, ul.navbar-right a:visited{
+        color:#000000;
+      }
+      ul.navbar-right a:hover{
+        color:#9d2933;
+        background-color:transparent;
+      }
+      ul.navbar-right a:focus{
+        outline:none;
+        background-color:transparent;
+      }
+      div.content{
+        display:none;
+      }
+      div.blocks{
+        margin:0 auto;
+        float:none;
+      }
+      div.block{
+        margin:0;
+        padding:3px;
+        opacity:0.9;
+      }
+      div.building{
+        border-radius:2px;
+        /*border:1px solid rgb(231, 231, 231);*/
+
+        /*box-shadow:-1px 0 1px -1px rgba(0,0,0,0.1), 
+        1px 0 1px -1px rgba(0,0,0,0.1), 
+        0 2px 2px -2px rgba(0,0,0,0.1);*/
+
+        box-shadow:1px 3px 2px -2px rgba(0,0,0,0.1);
+      }
+      div.block-header{
+        margin:0;
+        padding-bottom:2px;
+      }
+      div.block-desc{
+        padding:0;
+      }
+      div.block-name{
+        text-align:center;
+        padding:1px 1px 1px 1px;
+      }
+      div.block-name a, div.block-name a:visited{
+        padding-top:2px;
+        display:block;
+        color:#000000;
+        font-size:14px;
+        line-height:32px;
+        height:32px;
+        border-radius:2px;
+        text-decoration:none;
+      }
+      div.block-name a:hover{
+        padding-top:2px;
+        color:#ffffff;
+        text-decoration:none;
+        background-color:#2c3e50;
+        white-space:nowrap;
+      }
+      div.block-action{
+        text-align:center;
+      }
+      a.block-open-all{
+        float:right;
+      }
+      div.website{
+        padding:1px;
+      }
+      div.website a:link, 
+      div.website a:visited{
+        background-color:#ffffff;
+        display:block;
+        position:relative;
+        text-align:center;
+        vertical-align:middle;
+        text-decoration:none;
+        line-height:45px;
+        height:45px;
+        font-size:14px;
+        border-radius:2px;
+        color:#474a4d;
+        overflow:hidden;
+        transition-property:background-color, color, font-size;
+        transition-duration:0.2s;
+        transition-timing-function:ease;
+      }
+      div.website a.hover{
+        background-color:#2c3e50;
+        color:#ffffff;
+        font-size:24px;
+      }
+      div.modal-body{
+        padding:0px;
+      }
+      div.modal-section{
+        margin:0 auto;
+      }
+      div.modal-section h4#suggestion{
+        float:right;
+      }
+      div.modal-section h4#cooperation{
+        float:left;
+      }
+      div.category-confirm-content{
+        padding:10px;
+        text-align:center;
+      }
+      div.category-confirm-option{
+        text-align:center;
+      }
+      div.category-confirm-button{
+        margin:0 auto 15px;
+        width:200px;
+      }
+      div.modal-section span#hotkey-intro{
+        display:inline-block;
+        text-align:center;
+        margin:10px 0 10px 32px;
+      }
+      div#modal-footer{
+        margin-top:10px;
+        margin-bottom:10px;
+      }
+      table#hotkey-table{
+        margin:0 auto;
+        padding:0;
+      }
+      td.hotkey{
+        display:inline-block;
+        text-align:center;
+        margin-right:10px;
+        line-height:40px;
+        height:40px;
+        width:40px;
+      }
+      td.hotkey span{
+        display:inline-block;
+        background-color:#2c3e50;
+        border-radius:2px;
+        color:#ffffff;
+        width:36px;
+        height:36px;
+        line-height:36px;
+      }
+      td.hotkey-desc{
+        display:inline-block;
+        text-align:center;
+        width:60px;
+      }
+      td.hotkey-placeholder{
+        display:inline-block;
+        margin:auto 10px;
+      }
+      div.modal-placeholder{
+        margin:20px auto;
+      }
+      img.sprite{
+        background:url(/static/sprite.png);
+        background-repeat:no-repeat;
+      }
+      img.logo_pic{
+        height:40px;
+        width:65px;
+        background-position:0px -50px;
+      }
+      img.logo_char{
+        height:40px;
+        width:72px;
+        background-position:0px 0px;
+      }
+      img.desc_simple{
+        height:180px;
+        width:600px;
+        background-position:0px -100px;
+      }
+      img.desc_lazy{
+        height:180px;
+        width:600px;
+        background-position:0px -300px;
+      }
+      div.multi_browser_background{
+        padding:5px 10px 1px 10px;
+        border-radius:0 0 6px 6px;
+      }
+      div.single_browser_unit{
+        padding:5px 5px 0 5px;
+        margin-bottom:5px;
+      }
+      div.browser_index_tips{
+        display:none;
+      }
+      div.browser_index_tips dl{
+        color:#666666;
+        font-size:12px;
+        padding-left:0px;
+        margin-top:10px;
+        margin-bottom:5px;
+      }
+      div.browser_index_tips dt{
+        margin-bottom:10px;
+      }
+      div.browser_index_tips p{
+        margin:0 0 5px;
+      }
+      div.split_line{
+        margin-left:5px;
+        border-bottom:1px solid #dcdddd;
+      }
+      span.keywords{
+        border-radius:3px;
+        border:1px solid #8b968d;
+        padding:1px;
+        font-size:90%;
+      }
+      a#chrome_extension:link, a#chrome_extension:visited{
+        color:#666666;
+        border-radius:3px;
+        border:1px solid #8b968d;
+        padding:1px;
+        font-size:90%;
+        text-decoration:none;
+      }
+      a#chrome_extension:hover{
+        color:#ffffff;
+        text-decoration:none;
+        background-color:#2c3e50;
+      }
+    </style>
+    <script>
+      if (/Android|webOS|iPhone|iPod|BlackBerry|SymbianOS/i.test(navigator.userAgent)) {
+        $("body").hide();
+        window.location.href='http://go.izheteng.eu.org/m';
+      }
+    </script>
+  </head>
+  <body>
+    <div class="content">
+      <nav class="navbar" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <img class="sprite logo_pic" src="/static/transparent.png" alt="logo">
+            <img class="sprite logo_char" src="/static/transparent.png" alt="brand">
+          </div>
+          <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#" data-toggle="modal" data-target="#browserIndexModal" id="browserIndex" >添加为主页</a></li>
+              <li><a href="#" data-toggle="modal" data-target="#hotkeyModal" id="hotkey" >快捷键</a></li>
+              <li><a href="#" data-toggle="modal" data-target="#aboutModal" id="about" >关于</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <!--#website_dict，blockNo和website序列的字典-->
+      <!--#block_list，区块列表-->
+      <div class="container blocks">
+        
+          <div class="col-sm-4 col-lg-4 block"><!--block用来约束分类对应的区块位置，building用来展示实际带边框的分类内容，包括分类标题和分类下的网站-->
+            <div class="col-sm-12 col-lg-12 building">
+              <div class="row block-header">
+                <div class="col-sm-12 col-lg-12 block-desc">
+                  <div class="col-sm-4 col-lg-4 block-name">
+                    <a class="block-name" href="#">
+                      常用·工作
+                    </a>
+                  </div>
+                  <div class="col-sm-4 col-lg-4 placeholder"></div>
+                  <div class="col-sm-4 col-lg-4 placeholder"></div>
+                </div>
+              </div>
+              
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.baidu.com" id="11" class="website hotkey66 hotkey32 hotkey81">
+                    <span>百度</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.google.com" id="12" class="website hotkey71">
+                    <span>谷歌</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://wx.qq.com" id="13" class="website hotkey">
+                    <span>网页版微信</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://app.yinxiang.com/Home.action" id="14" class="website hotkey">
+                    <span>印象笔记</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://mail.qq.com" id="15" class="website hotkey">
+                    <span>QQ邮箱</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://gmail.com" id="16" class="website hotkey">
+                    <span>Gmail</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.163.com" id="17" class="website hotkey69">
+                    <span>网易</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://douban.fm" id="18" class="website hotkey">
+                    <span>豆瓣电台</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://dict.youdao.com" id="19" class="website hotkey89">
+                    <span>有道词典</span>
+                  </a>
+                </div>
+              
+            </div>
+          </div>
+        
+          <div class="col-sm-4 col-lg-4 block"><!--block用来约束分类对应的区块位置，building用来展示实际带边框的分类内容，包括分类标题和分类下的网站-->
+            <div class="col-sm-12 col-lg-12 building">
+              <div class="row block-header">
+                <div class="col-sm-12 col-lg-12 block-desc">
+                  <div class="col-sm-4 col-lg-4 block-name">
+                    <a class="block-name" href="#">
+                      常用·社交
+                    </a>
+                  </div>
+                  <div class="col-sm-4 col-lg-4 placeholder"></div>
+                  <div class="col-sm-4 col-lg-4 placeholder"></div>
+                </div>
+              </div>
+              
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.zhihu.com" id="21" class="website hotkey90">
+                    <span>知乎</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://weibo.com" id="22" class="website hotkey87">
+                    <span>微博</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.douban.com" id="23" class="website hotkey68">
+                    <span>豆瓣</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.xueqiu.com" id="24" class="website hotkey88">
+                    <span>雪球</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.newsmth.net" id="25" class="website hotkey">
+                    <span>水木社区</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.jianshu.com" id="26" class="website hotkey74">
+                    <span>简书</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.hupu.com" id="27" class="website hotkey72">
+                    <span>虎扑</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.chiphell.com" id="28" class="website hotkey67">
+                    <span>Chiphell</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.v2ex.com" id="29" class="website hotkey86">
+                    <span>V2EX</span>
+                  </a>
+                </div>
+              
+            </div>
+          </div>
+        
+          <div class="col-sm-4 col-lg-4 block"><!--block用来约束分类对应的区块位置，building用来展示实际带边框的分类内容，包括分类标题和分类下的网站-->
+            <div class="col-sm-12 col-lg-12 building">
+              <div class="row block-header">
+                <div class="col-sm-12 col-lg-12 block-desc">
+                  <div class="col-sm-4 col-lg-4 block-name">
+                    <a class="block-name" href="#">
+                      常用·生活
+                    </a>
+                  </div>
+                  <div class="col-sm-4 col-lg-4 placeholder"></div>
+                  <div class="col-sm-4 col-lg-4 placeholder"></div>
+                </div>
+              </div>
+              
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.taobao.com" id="31" class="website hotkey84">
+                    <span>淘宝</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.smzdm.com" id="32" class="website hotkey83">
+                    <span>什么值得买</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.sina.com.cn" id="33" class="website hotkey">
+                    <span>新浪</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.alipay.com" id="34" class="website hotkey80">
+                    <span>支付宝</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.meituan.com" id="35" class="website hotkey77">
+                    <span>美团</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.dianping.com" id="36" class="website hotkey">
+                    <span>大众点评</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.bilibili.com" id="37" class="website hotkey73">
+                    <span>Bilibili</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.acfun.tv" id="38" class="website hotkey65">
+                    <span>Acfun</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://music.163.com" id="39" class="website hotkey">
+                    <span>网易云音乐</span>
+                  </a>
+                </div>
+              
+            </div>
+          </div>
+        
+          <div class="col-sm-4 col-lg-4 block"><!--block用来约束分类对应的区块位置，building用来展示实际带边框的分类内容，包括分类标题和分类下的网站-->
+            <div class="col-sm-12 col-lg-12 building">
+              <div class="row block-header">
+                <div class="col-sm-12 col-lg-12 block-desc">
+                  <div class="col-sm-4 col-lg-4 block-name">
+                    <a class="block-name" href="#">
+                      新闻
+                    </a>
+                  </div>
+                  <div class="col-sm-4 col-lg-4 placeholder"></div>
+                  <div class="col-sm-4 col-lg-4 placeholder"></div>
+                </div>
+              </div>
+              
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://news.baidu.com" id="41" class="website hotkey">
+                    <span>百度新闻</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.ftchinese.com" id="42" class="website hotkey">
+                    <span>FT中文网</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.10jqka.com.cn" id="43" class="website hotkey">
+                    <span>同花顺</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.36kr.com" id="44" class="website hotkey">
+                    <span>36氪</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.huxiu.com" id="45" class="website hotkey">
+                    <span>虎嗅</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://wallstreetcn.com" id="46" class="website hotkey">
+                    <span>华尔街见闻</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://ent.sina.com.cn" id="47" class="website hotkey">
+                    <span>新浪娱乐</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.autohome.com.cn" id="48" class="website hotkey">
+                    <span>汽车之家</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.bitauto.com" id="49" class="website hotkey">
+                    <span>易车网</span>
+                  </a>
+                </div>
+              
+            </div>
+          </div>
+        
+          <div class="col-sm-4 col-lg-4 block"><!--block用来约束分类对应的区块位置，building用来展示实际带边框的分类内容，包括分类标题和分类下的网站-->
+            <div class="col-sm-12 col-lg-12 building">
+              <div class="row block-header">
+                <div class="col-sm-12 col-lg-12 block-desc">
+                  <div class="col-sm-4 col-lg-4 block-name">
+                    <a class="block-name" href="#">
+                      视频
+                    </a>
+                  </div>
+                  <div class="col-sm-4 col-lg-4 placeholder"></div>
+                  <div class="col-sm-4 col-lg-4 placeholder"></div>
+                </div>
+              </div>
+              
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.youku.com" id="51" class="website hotkey">
+                    <span>优酷</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.iqiyi.com" id="52" class="website hotkey">
+                    <span>爱奇艺</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://tv.sohu.com" id="53" class="website hotkey">
+                    <span>搜狐视频</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://v.qq.com" id="54" class="website hotkey">
+                    <span>腾讯视频</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.letv.com" id="55" class="website hotkey">
+                    <span>乐视</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.kankan.com" id="56" class="website hotkey">
+                    <span>迅雷看看</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.tudou.com" id="57" class="website hotkey">
+                    <span>土豆</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.douyutv.com" id="58" class="website hotkey">
+                    <span>斗鱼TV</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.hunantv.com" id="59" class="website hotkey">
+                    <span>湖南卫视</span>
+                  </a>
+                </div>
+              
+            </div>
+          </div>
+        
+          <div class="col-sm-4 col-lg-4 block"><!--block用来约束分类对应的区块位置，building用来展示实际带边框的分类内容，包括分类标题和分类下的网站-->
+            <div class="col-sm-12 col-lg-12 building">
+              <div class="row block-header">
+                <div class="col-sm-12 col-lg-12 block-desc">
+                  <div class="col-sm-4 col-lg-4 block-name">
+                    <a class="block-name" href="#">
+                      购物
+                    </a>
+                  </div>
+                  <div class="col-sm-4 col-lg-4 placeholder"></div>
+                  <div class="col-sm-4 col-lg-4 placeholder"></div>
+                </div>
+              </div>
+              
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.taobao.com" id="61" class="website hotkey">
+                    <span>淘宝</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.tmall.com" id="62" class="website hotkey">
+                    <span>天猫</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.jd.com" id="63" class="website hotkey">
+                    <span>京东</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://z.cn" id="64" class="website hotkey">
+                    <span>亚马逊</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.dangdang.com" id="65" class="website hotkey">
+                    <span>当当</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.vip.com" id="66" class="website hotkey">
+                    <span>唯品会</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.suning.com" id="67" class="website hotkey">
+                    <span>苏宁易购</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.yhd.com" id="68" class="website hotkey">
+                    <span>一号店</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.mi.com" id="69" class="website hotkey">
+                    <span>小米网</span>
+                  </a>
+                </div>
+              
+            </div>
+          </div>
+        
+          <div class="col-sm-4 col-lg-4 block"><!--block用来约束分类对应的区块位置，building用来展示实际带边框的分类内容，包括分类标题和分类下的网站-->
+            <div class="col-sm-12 col-lg-12 building">
+              <div class="row block-header">
+                <div class="col-sm-12 col-lg-12 block-desc">
+                  <div class="col-sm-4 col-lg-4 block-name">
+                    <a class="block-name" href="#">
+                      发现
+                    </a>
+                  </div>
+                  <div class="col-sm-4 col-lg-4 placeholder"></div>
+                  <div class="col-sm-4 col-lg-4 placeholder"></div>
+                </div>
+              </div>
+              
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://open.163.com" id="71" class="website hotkey">
+                    <span>网易公开课</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.guokr.com" id="72" class="website hotkey">
+                    <span>果壳</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://baozoumanhua.com" id="73" class="website hotkey">
+                    <span>暴走漫画</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.lofter.com" id="74" class="website hotkey76">
+                    <span>Lofter</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://next.36kr.com" id="75" class="website hotkey">
+                    <span>NEXT</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.zealer.com" id="76" class="website hotkey">
+                    <span>Zealer</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://itjuzi.com" id="77" class="website hotkey">
+                    <span>IT桔子</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.gewara.com" id="78" class="website hotkey">
+                    <span>格瓦拉</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.futu5.com" id="79" class="website hotkey">
+                    <span>富途证券</span>
+                  </a>
+                </div>
+              
+            </div>
+          </div>
+        
+          <div class="col-sm-4 col-lg-4 block"><!--block用来约束分类对应的区块位置，building用来展示实际带边框的分类内容，包括分类标题和分类下的网站-->
+            <div class="col-sm-12 col-lg-12 building">
+              <div class="row block-header">
+                <div class="col-sm-12 col-lg-12 block-desc">
+                  <div class="col-sm-4 col-lg-4 block-name">
+                    <a class="block-name" href="#">
+                      商旅
+                    </a>
+                  </div>
+                  <div class="col-sm-4 col-lg-4 placeholder"></div>
+                  <div class="col-sm-4 col-lg-4 placeholder"></div>
+                </div>
+              </div>
+              
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.qyer.com" id="81" class="website hotkey">
+                    <span>穷游</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.mafengwo.cn" id="82" class="website hotkey">
+                    <span>蚂蜂窝</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.breadtrip.com" id="83" class="website hotkey">
+                    <span>面包旅行</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.qunar.com" id="84" class="website hotkey78">
+                    <span>去哪</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.ctrip.com" id="85" class="website hotkey">
+                    <span>携程</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.tianxun.com" id="86" class="website hotkey">
+                    <span>天巡</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.booking.com" id="87" class="website hotkey">
+                    <span>Booking</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://zh.airbnb.com" id="88" class="website hotkey">
+                    <span>Airbnb</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.zuche.com" id="89" class="website hotkey">
+                    <span>神州租车</span>
+                  </a>
+                </div>
+              
+            </div>
+          </div>
+        
+          <div class="col-sm-4 col-lg-4 block"><!--block用来约束分类对应的区块位置，building用来展示实际带边框的分类内容，包括分类标题和分类下的网站-->
+            <div class="col-sm-12 col-lg-12 building">
+              <div class="row block-header">
+                <div class="col-sm-12 col-lg-12 block-desc">
+                  <div class="col-sm-4 col-lg-4 block-name">
+                    <a class="block-name" href="#">
+                      银行
+                    </a>
+                  </div>
+                  <div class="col-sm-4 col-lg-4 placeholder"></div>
+                  <div class="col-sm-4 col-lg-4 placeholder"></div>
+                </div>
+              </div>
+              
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.cmbchina.com" id="91" class="website hotkey">
+                    <span>招商银行</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.icbc.com.cn" id="92" class="website hotkey">
+                    <span>工商银行</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.ccb.com" id="93" class="website hotkey">
+                    <span>建设银行</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.abchina.com" id="94" class="website hotkey">
+                    <span>农业银行</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.boc.cn" id="95" class="website hotkey">
+                    <span>中国银行</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.bankcomm.com" id="96" class="website hotkey">
+                    <span>交通银行</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.cgbchina.com.cn" id="97" class="website hotkey">
+                    <span>广发银行</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://www.cmbc.com.cn" id="98" class="website hotkey">
+                    <span>民生银行</span>
+                  </a>
+                </div>
+              
+                <div class="col-sm-4 col-lg-4 website">
+                  <a href="http://bank.pingan.com" id="99" class="website hotkey">
+                    <span>平安银行</span>
+                  </a>
+                </div>
+              
+            </div>
+          </div>
+        
+      <!--上面为主体导航内容-->
+      </div>
+    </div>
+
+    <!--分类确认打开碳层-->
+    <div class="modal fade" id="categoryConfirmModal" tabindex="-1" role="dialog" aria-labelledby="sentenceModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="categoryConfirmModalLabel">小提示</h4>
+          </div>
+          <div class="modal-body">
+            <div class="modal-section category-confirm-content">
+              <h4 id="varText"></h4>
+              <h6>同时会打开9个标签页哦:)</h6>
+            </div>
+            <div class="modal-section">
+              <div class="category-confirm-button">
+                <button id="categoryConfirmButton" type="button" class="btn btn-primary btn-block">确认</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--关于弹层-->
+    <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="sentenceModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h5 class="modal-title" id="sentenceModalLabel">关于</h5>
+          </div>
+          <div class="modal-body">
+            <div class="modal-section">
+              <img class="sprite desc_simple img-responsive" alt="simple" src="/static/transparent.png">
+            </div>
+            <div class="modal-section">
+              <img class="sprite desc_lazy img-responsive" alt="lazy" src="/static/transparent.png">
+            </div>
+            <div class="modal-placeholder">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--快捷键弹层-->
+    <div class="modal fade" id="hotkeyModal" tabindex="-1" role="dialog" aria-labelledby="sentenceModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h5 class="modal-title" id="sentenceModalLabel">快捷键</h5>
+          </div>
+          <div class="modal-body">
+            <div class="modal-section hotkey-intro">
+              <span id="hotkey-intro">首页按下快捷键，即可直达热门站点</span>
+            </div>
+            <div class="modal-section">
+                <table id="hotkey-table">
+                  <tr>
+                    <td class="hotkey"><span>B</span></td>
+                    <td class="hotkey-desc"><span>百度</span></td>
+                    <td class="hotkey-placeholder"></td>
+                    <td class="hotkey"><span>空格</span></td>
+                    <td class="hotkey-desc"><span>百度</span></td>
+                  </tr>
+                  <tr>
+                    <td class="hotkey"><span>Q</span></td>
+                    <td class="hotkey-desc"><span>百度</span></td>
+                    <td class="hotkey-placeholder"></td>
+                    <td class="hotkey"><span>G</span></td>
+                    <td class="hotkey-desc"><span>谷歌</span></td>
+                  </tr>
+                  <tr>
+                    <td class="hotkey"><span>W</span></td>
+                    <td class="hotkey-desc"><span>微博</span></td>
+                    <td class="hotkey-placeholder"></td>
+                    <td class="hotkey"><span>D</span></td>
+                    <td class="hotkey-desc"><span>豆瓣</span></td>
+                  </tr>
+                  <tr>
+                    <td class="hotkey"><span>T</span></td>
+                    <td class="hotkey-desc"><span>淘宝</span></td>
+                    <td class="hotkey-placeholder"></td>
+                    <td class="hotkey"><span>S</span></td>
+                    <td class="hotkey-desc"><span>值得买</span></td>
+                  </tr>
+                  <tr>
+                    <td class="hotkey"><span>Z</span></td>
+                    <td class="hotkey-desc"><span>知乎</span></td>
+                    <td class="hotkey-placeholder"></td>
+                    <td class="hotkey"><span>X</span></td>
+                    <td class="hotkey-desc"><span>雪球</span></td>
+                  </tr>
+                  <tr>
+                    <td class="hotkey"><span>A</span></td>
+                    <td class="hotkey-desc"><span>A站</span></td>
+                    <td class="hotkey-placeholder"></td>
+                    <td class="hotkey"><span>I</span></td>
+                    <td class="hotkey-desc"><span>B站</span></td>
+                  </tr>
+                  <tr>
+                    <td class="hotkey"><span>J</span></td>
+                    <td class="hotkey-desc"><span>简书</span></td>
+                    <td class="hotkey-placeholder"></td>
+                    <td class="hotkey"><span>L</span></td>
+                    <td class="hotkey-desc"><span>Lofter</span></td>
+                  </tr>
+                  <tr>
+                    <td class="hotkey"><span>V</span></td>
+                    <td class="hotkey-desc"><span>V2EX</span></td>
+                    <td class="hotkey-placeholder"></td>
+                    <td class="hotkey"><span>H</span></td>
+                    <td class="hotkey-desc"><span>虎扑</span></td>
+                  </tr>
+                  <tr>
+                    <td class="hotkey"><span>M</span></td>
+                    <td class="hotkey-desc"><span>美团</span></td>
+                    <td class="hotkey-placeholder"></td>
+                    <td class="hotkey"><span>P</span></td>
+                    <td class="hotkey-desc"><span>支付宝</span></td>
+                  </tr>
+                  <tr>
+                    <td class="hotkey"><span>E</span></td>
+                    <td class="hotkey-desc"><span>网易</span></td>
+                    <td class="hotkey-placeholder"></td>
+                    <td class="hotkey"><span>Y</span></td>
+                    <td class="hotkey-desc"><span>有道词典</span></td>
+                  </tr>
+                  <tr>
+                    <td class="hotkey"><span>C</span></td>
+                    <td class="hotkey-desc"><span>Chiphell</span></td>
+                    <td class="hotkey-placeholder"></td>
+                    <td class="hotkey"><span>N</span></td>
+                    <td class="hotkey-desc"><span>去哪</span></td>
+                  </tr>
+                </table>
+            </div>
+            <div class="modal-placeholder">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--设置为浏览器首页弹层-->
+    <div class="modal fade" id="browserIndexModal" tabindex="-1" role="dialog" aria-labelledby="sentenceModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h5 class="modal-title" id="sentenceModalLabel">添加为主页</h5>
+          </div>
+          <div class="modal-body">
+            <div class="modal-section browser_index_tips multi_browser_background" id="index_tips_chrome">
+              <div class="single_browser_unit" id="chrome_extension_tips">
+                <p><span>如果您正在使用Chrome浏览器</span></p>
+                <dl class="dl-horizontal">
+                  <dt>设置主页</dt>
+                  <dd>点击<span class="keywords">设置</span> ，在<span class="keywords">启动时</span>一栏，设置<span class="keywords">启动页</span>为<kbd>go.izheteng.eu.org</kbd></dd>
+                  <dt>设置新标签页</dt>
+                </dl>
+              </div>
+              <div class="split_line"></div>
+              <div class="single_browser_unit" id="360safe_tips">
+                <p><span>如果您正在使用360安全浏览器</span></p>
+                <dl class="dl-horizontal">
+                  <dt>进入设置面板</dt>
+                  <dd>点击<span class="keywords">工具</span>，然后点击<span class="keywords">选项</span></dd>
+                  <dt>设置主页</dt>
+                  <dd>在<span class="keywords">启动时打开</span>一栏，修改<span class="keywords">主页</span>为<kbd>go.izheteng.eu.org</kbd></dd>
+                  <dt>设置新标签页</dt>
+                  <dd>很遗憾，360安全浏览器暂时无法自定义新标签页</dd>
+                </dl>
+              </div>
+              <div class="split_line"></div>
+              <div class="single_browser_unit" id="other_browser_tips">
+                <p><span>如果您正在使用其他浏览器(360极速、世界之窗、hao123等)</span></p>
+                <dl class="dl-horizontal">
+                  <dt>进入设置面板</dt>
+                  <dd>点击<span class="keywords">偏好设置</span>或<span class="keywords">设置</span>的浏览器选项</dd>
+                  <dt>设置主页</dt>
+                  <dd>设置<span class="keywords">主页</span>为<kbd>go.izheteng.eu.org</kbd></dd>
+                  <dt>设置新标签页</dt>
+                  <dd>将<span class="keywords">新标签页</span>或<span class="keywords">新选项卡</span>设置为<span class="keywords">主页</span></dd>
+                </dl>
+              </div>
+            </div>
+            <div class="modal-section browser_index_tips row" id="index_tips_safari">
+              <div class="col-xs-12 col-lg-12">
+                <h5>您正在使用Safari浏览器，请参考如下步骤设置</h5>
+                <dl class="dl-horizontal">
+                  <dt>进入设置面板</dt>
+                  <dd>任务栏点击<span class="keywords">Safari</span>，然后点击<span class="keywords">偏好设置</span></dd>
+                  <dt>设置主页</dt>
+                  <dd>在<span class="keywords">通用</span>选项卡下，设置<span class="keywords">主页</span>为<kbd>go.izheteng.eu.org</kbd></dd>
+                  <dt>设置新标签页</dt>
+                  <dd>设置<span class="keywords">新窗口打开方式</span>和<span class="keywords">新标签页打开方式</span>为<span class="keywords">主页</span></dd>
+                </dl>
+              </div>
+            </div>
+            <div class="modal-section browser_index_tips row" id="index_tips_firefox">
+              <div class="col-xs-12 col-lg-12">
+                <h5>您正在使用Firefox浏览器，请参考如下步骤设置</h5>
+                <dl class="dl-horizontal">
+                  <dt>进入设置面板</dt>
+                  <dd>点击<span class="keywords">首选项</span></dd>
+                  <dt>设置主页</dt>
+                  <dd>在<span class="keywords">常规</span>选项卡下，设置<span class="keywords">主页</span>为<kbd>go.izheteng.eu.org</kbd></dd>
+                </dl>
+              </div>
+            </div>
+            <div class="modal-section browser_index_tips row" id="index_tips_ie">
+              <div class="col-xs-12 col-lg-12">
+                <h5>您正在使用IE浏览器，请参考如下步骤设置</h5>
+                <dl class="dl-horizontal">
+                  <dt>设置主页</dt>
+                  <dd>点击<span class="keywords">Internet选项</span>，在<span class="keywords">常规</span>选项卡下，设置<span class="keywords">主页</span>为<kbd>go.izheteng.eu.org</bkd></dd>
+                  <dt>设置新标签页</dt>
+                  <dd>在<span class="keywords">选项卡</span>一栏，点击<span class="keywords">设置</span>，在<span class="keywords">打开选项卡后，打开</span>一栏，选择<span class="keywords">您的第一个主页</span></dd>
+                </dl>
+              </div>
+            </div>
+            <div class="modal-section browser_index_tips row" id="index_tips_sougou">
+              <div class="col-xs-12 col-lg-12">
+                <h5>您正在使用搜狗浏览器，请参考如下步骤设置</h5>
+                <dl class="dl-horizontal">
+                  <dt>进入设置面板</dt>
+                  <dd>点击<span class="keywords">工具</span>，然后点击<span class="keywords">选项</span></dd>
+                  <dt>设置主页</dt>
+                  <dd>在<span class="keywords">基本设置</span>页卡下，自定义<span class="keywords">主页</span>为<kbd>go.izheteng.eu.org</kbd></dd>
+                  <dt>设置新标签页</dt>
+                  <dd>在<span class="keywords">标签设置</span>页卡下，自定义<span class="keywords">新建标签页时打开</span>为<kbd>go.izheteng.eu.org</kbd></dd>
+                </dl>
+              </div>
+            </div>
+            <div class="modal-section browser_index_tips row" id="index_tips_liebao">
+              <div class="col-xs-12 col-lg-12">
+                <h5>您正在使用猎豹浏览器，请参考如下步骤设置</h5>
+                <dl class="dl-horizontal">
+                  <dt>进入设置面板</dt>
+                  <dd>点击<span class="keywords">猎豹图标</span>，然后点击<span class="keywords">选项/设置</span></dd>
+                  <dt>设置主页</dt>
+                  <dd>在<span class="keywords">基本设置</span>页卡下， 设置<span class="keywords">主页设置</span>为<span class="keywords">添加新网页</span>，输入<kbd>go.izheteng.eu.org</kbd></dd>
+                  <dt>设置新标签页</dt>
+                  <dd>在<span class="keywords">标签设置</span>页卡下，设置<span class="keywords">新标签页打开</span>为<span class="keywords">主页</span></dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function(){
+        $("body").css("background-image","url(/static/mountain.jpg)");
+        $(window).resize(function(){
+          var top_in_digits = ($(window).height() - $("div.content").outerHeight())/4;
+          top_in_digits = (top_in_digits > 0)?top_in_digits:0;
+          $("div.content").css({
+            position:"relative",
+            top:top_in_digits,
+            margin:"0 auto",
+            float:"none",
+            display:"inherit"
+          });
+        });
+        $(window).resize();
+        $("a.website").attr("target","_blank");
+        $("a.website").hover(
+          function(){
+            $(this).addClass("hover");
+          }, function(){
+            $(this).removeClass("hover");
+          }
+        );
+        $("a.website").click(function(){
+          $(this).removeClass("hover");
+        });
+        var temp_building;
+        var temp_category_name;
+        $("div.block-name").click(function(){
+          temp_building = $(this).parents("div.building");
+          temp_category_name = $(this).find("a.block-name").text();
+          $('#categoryConfirmModal').modal('show');
+        });
+        $('#categoryConfirmModal').on('show.bs.modal', function (event) {
+          var modal = $(this);
+          modal.find('#varText').text('打开' + temp_category_name + '下所有站点？');
+        })
+        $("#categoryConfirmButton").click(function(){
+          temp_building.find("a.website").each(function(){
+            var evt = document.createEvent("MouseEvents");
+            evt.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0,
+                                true, false, false, true, 0, null);
+            $(this).get(0).dispatchEvent(evt);
+          });
+          $('#categoryConfirmModal').modal('hide');
+        });
+        $(document).bind("keydown", function(event){
+          //event.preventDefault();
+          var k = event.which || event.keyCode;
+          for(var i = 32; i < 91; i++){
+            if (i == k){
+              var obj = $("a.hotkey" + k);
+              if(obj.attr("href") != undefined){
+                obj.addClass("hover");
+                setTimeout(function(){
+                  window.open(obj.attr("href"));
+                  obj.removeClass("hover");
+                },500);
+              }
+            }
+          }
+          return false;
+        });
+      });
+      var prefix = "index_tips_";
+      var div_id = prefix + getBrowserOS();
+      $("div#"+div_id).css("display","inherit");
+      function successCallBack(){
+        window.location.reload();
+      }
+      function getBrowserOS(){
+        var OsObject = ""; 
+        if(isIE = navigator.userAgent.toLowerCase().indexOf("msie")!=-1) { 
+            return "ie"; 
+        } 
+        if(isOpera=navigator.userAgent.toLowerCase().indexOf("metasr")!=-1){ 
+            return "sougou"; 
+        }
+        if(isOpera=navigator.userAgent.toLowerCase().indexOf("lbbrowser")!=-1){ 
+            return "liebao"; 
+        } 
+        if(isFirefox=navigator.userAgent.toLowerCase().indexOf("firefox")!=-1){ 
+            return "firefox"; 
+        } 
+        if(isChrome=navigator.userAgent.toLowerCase().indexOf("chrome")!=-1){ 
+            return "chrome";
+        }
+        if(isSafari=navigator.userAgent.toLowerCase().indexOf("safari")!=-1) { 
+            return "safari"; 
+        }  
+        if(isOpera=navigator.userAgent.toLowerCase().indexOf("opera")!=-1){ 
+            return "opera"; 
+        }
+      }
+    </script>
+  </body>
+</html>

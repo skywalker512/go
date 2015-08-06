@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <title>虫洞 - 爱折腾 - 跨越空间维度的传送</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- Bootstrap -->
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="http://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+    
+    <link rel="icon" href="/icon.png">
+    
+    <style type="text/css">
+      body{
+        font-family:'Microsoft Yahei';
+        background-size:100% auto;
+        background-attachment:fixed;
+        background-repeat:no-repeat;
+        background-size:cover;
+      }
+      .navbar{
+        margin-bottom:0;
+        padding:15px;
+      }
+      div.ceiling{
+        padding:0;
+      }
+      @media (max-width:768px){
+        .container-fluid>.navbar-collapse, .container-fluid>.navbar-header, .container>.navbar-collapse, .container>.navbar-header {
+          margin-right: 0;
+          margin-left: 0;
+        }
+        .navbar-header{
+          float:left;
+        }
+      }
+      div.container{
+        margin:0;
+        padding:0;
+      }
+      img.sprite{
+        background:url(/static/sprite_m.png);
+        background-repeat:no-repeat;
+      }
+      img.logo_pic{
+        height:31px;
+        width:50px;
+        background-position:0px -24px;
+      }
+      img.logo_char{
+        height:24px;
+        width:48px;
+        background-position:0px 0px;
+      }
+      div.ceiling a:link, div.ceiling a:visited{
+        color:#000000;
+        text-decoration:none;
+        float:right;
+        margin-right:5px;
+        margin-top:5px;
+      }
+      div.ceiling a:hover{
+        color:#9d2933;
+        background-color:transparent;
+      }
+      div.ceiling a:focus{
+        outline:none;
+        background-color:transparent;
+      }
+      div.blocks{
+        margin:0 auto;
+        float:none;
+      }
+      div.block{
+        margin:0;
+        padding:3px;
+        opacity:0.9;
+      }
+      div.building{
+        border-radius:2px;
+        box-shadow:1px 3px 2px -2px rgba(0,0,0,0.1);
+        padding:0;
+      }
+      div.block-header{
+        margin:0;
+        padding-bottom:2px;
+      }
+      div.block-desc{
+        padding:0;
+      }
+      div.block-name{
+        text-align:center;
+        padding:1px 1px 1px 1px;
+      }
+      div.block-name span{
+        padding-top:2px;
+        display:block;
+        color:#000000;
+        font-size:16px;
+        font-family:'STHeiti';
+        font-weight:bold;
+        line-height:32px;
+        height:32px;
+        border-radius:2px;
+        text-decoration:none;
+      }
+      div.website{
+        padding:1px;
+      }
+      div.website a:link, 
+      div.website a:visited{
+        background-color:#ffffff;
+        display:block;
+        position:relative;
+        text-align:center;
+        vertical-align:middle;
+        text-decoration:none;
+        line-height:45px;
+        height:45px;
+        font-size:14px;
+        border-radius:2px;
+        color:#474a4d;
+        overflow:hidden;
+        transition-property:background-color, color, font-size;
+        transition-duration:0.2s;
+        transition-timing-function:ease;
+      }
+      div.website a.hover{
+        background-color:#2c3e50;
+        color:#ffffff;
+        font-size:24px;
+      }
+      div.modal-desc{
+        padding:0 0 0 15px;
+        font-size:12px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar" role="navigation">
+      <div class="container-fluid ceiling">
+        <div class="navbar-header">
+          <img class="sprite logo_pic" src="/static/transparent.png" alt="logo">
+          <img class="sprite logo_char" src="/static/transparent.png" alt="brand">
+        </div>
+        <a href="#" data-toggle="modal" data-target="#pcTipsModal" id="pcTips" >电脑访问千山</a>
+      </div>
+    </nav>
+    <!--#website_dict，blockNo和website序列的字典-->
+    <!--#block_list，区块列表-->
+    <div class="container-fluid blocks">
+      
+        <div class="col-xs-12 col-sm-12 block"><!--block用来约束分类对应的区块位置，building用来展示实际带边框的分类内容，包括分类标题和分类下的网站-->
+          <div class="col-xs-12 col-sm-12 building">
+            <div class="row block-header">
+              <div class="col-xs-12 col-sm-12 block-desc">
+                <div class="col-xs-4 col-sm-4 block-name">
+                  <span class="block-name" href="#">
+                    常用
+                  </span>
+                </div>
+                <div class="col-xs-4 col-sm-4 placeholder"></div>
+                <div class="col-xs-4 col-sm-4 placeholder"></div>
+              </div>
+            </div>
+            
+            
+              <div class="col-xs-4 col-sm-4 website">
+                <a href="http://www.baidu.com" id="11" class="website hotkey">
+                  <span>百度</span>
+                </a>
+              </div>
+            
+              <div class="col-xs-4 col-sm-4 website">
+                <a href="http://www.google.com" id="12" class="website hotkey">
+                  <span>谷歌</span>
+                </a>
+              </div>
+            
+              <div class="col-xs-4 col-sm-4 website">
+                <a href="http://dict.youdao.com" id="13" class="website hotkey">
+                  <span>有道词典</span>
+                </a>
+              </div>
+            
+              <div class="col-xs-4 col-sm-4 website">
+                <a href="http://www.163.com" id="14" class="website hotkey">
+                  <span>网易</span>
+                </a>
+              </div>
+            
+              <div class="col-xs-4 col-sm-4 website">
+                <a href="http://www.thepaper.cn" id="15" class="website hotkey">
+                  <span>澎湃</span>
+                </a>
+              </div>
+            
+              <div class="col-xs-4 col-sm-4 website">
+                <a href="http://www.qdaily.com/" id="16" class="website hotkey">
+                  <span>好奇心</span>
+                </a>
+              </div>
+            
+              <div class="col-xs-4 col-sm-4 website">
+                <a href="http://www.0033.com" id="17" class="website hotkey">
+                  <span>同花顺</span>
+                </a>
+              </div>
+            
+              <div class="col-xs-4 col-sm-4 website">
+                <a href="http://finance.sina.com.cn" id="18" class="website hotkey">
+                  <span>新浪财经</span>
+                </a>
+              </div>
+            
+              <div class="col-xs-4 col-sm-4 website">
+                <a href="http://wallstreetcn.com" id="19" class="website hotkey">
+                  <span>华尔街</span>
+                </a>
+              </div>
+            
+          </div>
+        </div>
+      
+        <div class="col-xs-12 col-sm-12 block"><!--block用来约束分类对应的区块位置，building用来展示实际带边框的分类内容，包括分类标题和分类下的网站-->
+          <div class="col-xs-12 col-sm-12 building">
+            <div class="row block-header">
+              <div class="col-xs-12 col-sm-12 block-desc">
+                <div class="col-xs-4 col-sm-4 block-name">
+                  <span class="block-name" href="#">
+                    探索
+                  </span>
+                </div>
+                <div class="col-xs-4 col-sm-4 placeholder"></div>
+                <div class="col-xs-4 col-sm-4 placeholder"></div>
+              </div>
+            </div>
+            
+            
+              <div class="col-xs-4 col-sm-4 website">
+                <a href="http://www.douban.com" id="21" class="website hotkey">
+                  <span>豆瓣</span>
+                </a>
+              </div>
+            
+              <div class="col-xs-4 col-sm-4 website">
+                <a href="http://m.hupu.com" id="22" class="website hotkey">
+                  <span>虎扑</span>
+                </a>
+              </div>
+            
+              <div class="col-xs-4 col-sm-4 website">
+                <a href="http://tieba.baidu.com" id="23" class="website hotkey">
+                  <span>贴吧</span>
+                </a>
+              </div>
+            
+              <div class="col-xs-4 col-sm-4 website">
+                <a href="http://www.taobao.com" id="24" class="website hotkey">
+                  <span>淘宝</span>
+                </a>
+              </div>
+            
+              <div class="col-xs-4 col-sm-4 website">
+                <a href="http://www.dianping.com" id="25" class="website hotkey">
+                  <span>点评</span>
+                </a>
+              </div>
+            
+              <div class="col-xs-4 col-sm-4 website">
+                <a href="http://www.meituan.com" id="26" class="website hotkey">
+                  <span>美团</span>
+                </a>
+              </div>
+            
+              <div class="col-xs-4 col-sm-4 website">
+                <a href="http://www.qunar.com" id="27" class="website hotkey">
+                  <span>去哪儿</span>
+                </a>
+              </div>
+            
+              <div class="col-xs-4 col-sm-4 website">
+                <a href="http://www.ctrip.com" id="28" class="website hotkey">
+                  <span>携程</span>
+                </a>
+              </div>
+            
+              <div class="col-xs-4 col-sm-4 website">
+                <a href="http://www.qyer.com" id="29" class="website hotkey">
+                  <span>穷游</span>
+                </a>
+              </div>
+            
+          </div>
+        </div>
+        
+        <div class="col-xs-12 col-sm-12 block"><!--block用来约束分类对应的区块位置，building用来展示实际带边框的分类内容，包括分类标题和分类下的网站-->
+            <div class="col-xs-12 col-sm-12 building">
+            <div class="row block-header">
+              <div class="col-xs-12 col-sm-12 block-desc">
+                <div class="col-xs-4 col-sm-4 block-name">
+                  <span class="block-name" href="#">
+                      发现
+                    </a>
+                  </div>
+                  <div class="col-xs-4 col-sm-4 placeholder"></div>
+                  <div class="col-xs-4 col-sm-4 placeholder"></div>
+                </div>
+              </div>
+              
+              
+               	<div class="col-xs-4 col-sm-4 website">
+                  <a href="http://open.163.com" id="71" class="website hotkey">
+                    <span>网易公开课</span>
+                  </a>
+                </div>
+              
+                <div class="col-xs-4 col-sm-4 website">
+                  <a href="http://www.guokr.com" id="72" class="website hotkey">
+                    <span>果壳</span>
+                  </a>
+                </div>
+              
+                <div class="col-xs-4 col-sm-4 website">
+                  <a href="http://baozoumanhua.com" id="73" class="website hotkey">
+                    <span>暴走漫画</span>
+                  </a>
+                </div>
+              
+                <div class="col-xs-4 col-sm-4 website">
+                  <a href="http://www.lofter.com" id="74" class="website hotkey76">
+                    <span>Lofter</span>
+                  </a>
+                </div>
+              
+                <div class="col-xs-4 col-sm-4 website">
+                  <a href="http://next.36kr.com" id="75" class="website hotkey">
+                    <span>NEXT</span>
+                  </a>
+                </div>
+              
+                <div class="col-xs-4 col-sm-4 website">
+                  <a href="http://www.zealer.com" id="76" class="website hotkey">
+                    <span>Zealer</span>
+                  </a>
+                </div>
+              
+                <div class="col-xs-4 col-sm-4 website">
+                  <a href="http://itjuzi.com" id="77" class="website hotkey">
+                    <span>IT桔子</span>
+                  </a>
+                </div>
+              
+                <div class="col-xs-4 col-sm-4 website">
+                  <a href="http://www.gewara.com" id="78" class="website hotkey">
+                    <span>格瓦拉</span>
+                  </a>
+                </div>
+              
+                <div class="col-xs-4 col-sm-4 website">
+                  <a href="http://www.futu5.com" id="79" class="website hotkey">
+                    <span>富途证券</span>
+                  </a>
+                </div>
+              
+            </div>
+          </div>
+        
+          
+    <!--上面为主体导航内容-->
+    </div>
+
+    <div class="modal fade" id="pcTipsModal" tabindex="-1" role="dialog" aria-labelledby="sentenceModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h5 class="modal-title" id="sentenceModalLabel">电脑访问</h5>
+          </div>
+          <div class="modal-body">
+            <div class="modal-section">
+              <div class="row">
+                <div class="modal-desc col-xs-2 col-sm-2"><span>域名</span></div>
+                <div class="modal-desc col-xs-10 col-sm-10"><span>浏览器地址栏输入<kbd>go.izheteng.eu.org</kbd></div>
+                <div class="modal-desc col-xs-2 col-sm-2"><span>兼容</span></div>
+                <div class="modal-desc col-xs-10 col-sm-10"><span>支持Windows和Mac下各类型浏览器</span></div>
+              </div>
+            </div>
+            <div class="modal-section">
+                
+            </div>
+            <div class="modal-placeholder">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function(){
+        $("body").css("background-image","url(/static/mountain_m.jpg)");
+        $("a.website").attr("target","_blank");
+        $("a.website").hover(
+          function(){
+            $(this).addClass("hover");
+          }, function(){
+            $(this).removeClass("hover");
+          }
+        );
+        $("a.website").click(function(){
+          $(this).removeClass("hover");
+        });             
+      });
+    </script>
+  </body>
+</html>
